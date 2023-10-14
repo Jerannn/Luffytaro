@@ -1,13 +1,411 @@
-body {
+:root {
+  --color-primary: #6741d9;
+  --color-primary-light: #7950f2;
+  --color-text: #dee2e6;
+  --color-text-dark: #adb5bd;
+  --color-background-100: #343a40;
+  --color-background-500: #2b3035;
+  --color-background-900: #212529;
+  --color-red: #fa5252;
+  --color-red-dark: #e03131;
+}
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
+  color: #212529;
+  background-color: #f8f9fa;
+  padding: 2.4rem;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* NAVBAR */
+.nav {
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+.nav .logo {
+  font-size: 2rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nav .searchBox {
+  width: 100%;
+  border: 0;
+  padding: 0.5em;
+  font-size: 1.6rem;
+  border-radius: 4px;
+  outline: none;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+.nav .foundCount {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.main {
+  width: 100%;
+}
+
+/* FETCH MOVIES */
+.movies {
+  width: 100%;
+  height: 70dvh;
+  border-radius: 4px;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 2em;
+  margin-top: 2em;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px,
+    rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+  position: relative;
+}
+.movies .hideButton {
+  border: 0;
+  font-size: 2rem;
+  padding: 0.3em;
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  top: -0.7em;
+  right: -0.7em;
+  z-index: 100;
+}
+.movies .hideButton:hover {
+  background: #212529;
+  color: #f8f9fa;
+}
+.movies .movieList {
+  width: 100%;
+  overflow-y: scroll;
+  height: 70dvh;
+}
+.movieList::-webkit-scrollbar {
+  display: none;
+}
+.movieList {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.movies .movieList .movie {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 2em;
+  padding: 1em;
+  border-bottom: 1px solid #e3e3e4;
+  border-top: 1px solid #e3e3e4;
+  cursor: pointer;
+  position: relative;
+}
+.movies .movieList .movie:hover {
+  background: #212529;
+  color: #fff;
+}
+.movies .movieList .movie .removeMovieBtn {
+  position: absolute;
+  right: 0.5em;
+  border: 0;
+  font-size: 1.8rem;
+  color: rgb(211, 73, 73);
+  background: none;
+  cursor: pointer;
+}
+.movies .movieList .movie .movieSearchImage {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 70px;
+}
+.movies .movieList .movie .movieDescription {
+  font-size: 1.2rem;
+  line-height: 3em;
+  flex: 1;
+}
+.movies .movieList .movie .movieDescription p {
+  font-size: 1.6rem;
+}
+/* 
+WATCHED MOVIE */
+.movieInfo {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1em;
+  font-size: 1.9rem;
+}
+.movieInfo span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+}
+
+.fa-star {
+  color: #ffd27d;
+}
+.fa-imdb {
+  color: #ffd27d;
+}
+
+.summary {
+  border-bottom: 1px solid #e3e3e4;
+  border-top: 1px solid #e3e3e4;
+  background: #212529;
+  color: #e3e3e4;
+  width: 100%;
+  padding: 3em 2em;
+}
+.summary h1 {
+  text-transform: uppercase;
+  margin-bottom: 0.3em;
+}
+.summary span {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1em;
+  font-size: 1.6rem;
+}
+
+/* LOADER */
+.loaderContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #212529;
+  width: 70px;
+  height: 70px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error Message */
+.alert {
+  padding: 20px;
+  background-color: #da4b41;
+  color: white;
+  margin-bottom: 15px;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+
+.errorMsg {
+  font-size: 1.9rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+/* Movie Details */
+.movieDetailsContainer {
+  width: 100%;
+  height: 70dvh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 4px;
+  background: #212529;
+  color: #f3f3f3;
+  overflow-y: scroll;
+}
+
+.movieDetailsContainer::-webkit-scrollbar {
+  display: none;
+}
+.movieDetailsContainer {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.movieDetailsContainer .detailsCloseBtn {
+  position: absolute;
+  top: 0.5em;
+  left: 0.5em;
+  z-index: 100;
+  border: 0;
+  font-size: 2.2rem;
+  padding: 0.3em;
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  background: #212529#f8f9fa;
+  color: #212529;
+}
+.movieDetailsContainer .detailsCloseBtn:hover {
+  background: #212529;
+  color: #f8f9fa;
+}
+.movieDetailsContainer .MovieDetailsInfo {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  font-size: 1.2rem;
+  line-height: 2.5em;
+  background: #2b3035;
+  overflow: hidden;
+  border-radius: 4px;
+}
+.movieDetailsContainer .MovieDetailsInfo div p {
+  font-size: 1.6rem;
+}
+.movieDetailsContainer .MovieDetailsInfo .thumbnailImage {
+  width: 40%;
+  height: 100%;
+}
+
+.movieDetailsContainer .MovieDetailsInfo .thumbnailImage .detailsThumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.movieDetailsContainer .moreDetails {
+  background: #212529;
+  width: 100%;
+  padding: 2em;
+}
+
+.movieDetailsContainer .moreDetails .ratings {
+  border-radius: 5px;
+  background: #2b3035;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  padding: 2em 0;
+  margin-bottom: 2em;
+}
+.movieDetailsContainer .moreDetails .ratings span {
+  font-size: 1.6rem;
+}
+.movieDetailsContainer .moreDetails .ratings .addMovieBtn {
+  font-size: 1.6rem;
+  padding: 0.5em;
+  border: 0;
+  border-radius: 10px;
+  background: #8a6500;
+  color: #f3f3f3;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: 600;
+  width: 90%;
+}
+.moreDetails::-webkit-scrollbar {
+  display: none;
+}
+.moreDetails {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.movieDetailsContainer .moreDetails .aboutMovie {
+  font-size: 1.6rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.movieDetailsContainer .moreDetails .plot {
+  margin-top: 2em;
+  font-size: 1.7rem;
+  font-style: italic;
+}
+
+@media screen and (min-width: 600px) {
+  .nav {
+    max-width: 900px;
+    flex-direction: row;
+  }
+  .nav .searchBox {
+    width: 60%;
+    border: 0;
+    padding: 0.5em;
+    font-size: 1.6rem;
+    border-radius: 4px;
+    outline: none;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  }
+  .nav .logo .fa-film {
+    font-size: 3rem;
+  }
+
+  .nav .foundCount {
+    font-weight: 600;
+  }
+
+  .main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2em;
+    width: min(900px, 90%, 100%);
+  }
+  .movies {
+    height: 70dvh;
+    width: min(500px, 90%, 50dvw);
+  }
 }
